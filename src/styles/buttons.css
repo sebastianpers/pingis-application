@@ -1,0 +1,18 @@
+.btn {
+  background: var(--softhouse-orange) !important;
+  color: white !important;
+  text-transform: uppercase;
+}
+
+.btn:hover {
+  filter: brightness(90%);
+}
+
+.btn:active {
+  scale: 98%;
+}
+
+.btn-cancel {
+  background: var(--softhouse-blue) !important;
+  color: white !important;
+}
