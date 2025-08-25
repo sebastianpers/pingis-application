@@ -27,7 +27,7 @@ export default function PaginationBar({
   pageSize,
   onPageChange,
   windowSize = 2,
-  size = "md",
+  size = "sm",
   containerClassName = "d-flex flex-column justify-content-between align-items-center mt-4",
   paginationClassName = "my-3",
   summaryClassName = "text-muted",
@@ -38,7 +38,6 @@ export default function PaginationBar({
 }: Props) {
   const totalPages = Math.max(1, Math.ceil(total / pageSize));
 
-  // Bygg en kompakt listning av sidnummer med ellipser
   const items = useMemo<(number | "…")[]>(() => {
     const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
     const around = pages.filter(
@@ -55,7 +54,6 @@ export default function PaginationBar({
     return out;
   }, [page, totalPages, windowSize]);
 
-  // Klampa mål-sidan inom [1, totalPages]
   const goTo = (p: number) =>
     onPageChange(Math.min(Math.max(1, p), totalPages));
 

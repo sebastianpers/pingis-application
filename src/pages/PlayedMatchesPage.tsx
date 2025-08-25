@@ -101,13 +101,13 @@ const PlayedMatchesPage = () => {
                       navigateToCompletedMatch(match.id);
                     }}
                   >
-                    <td className="text-orange p-2 text-center">
+                    <td className="text-orange p-2 text-center text-nowrap">
                       {match?.player1?.name}
                     </td>
-                    <td className="text-orange p-2 text-center">
+                    <td className="text-orange p-2 text-center text-nowrap">
                       {match?.player2?.name}
                     </td>
-                    <td className="text-orange p-2 text-center">
+                    <td className="text-orange p-2 text-center text-nowrap">
                       {match?.winner?.name}
                     </td>
                     <td className="text-orange p-2  text-center text-nowrap">

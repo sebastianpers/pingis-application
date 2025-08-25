@@ -42,7 +42,7 @@ export async function getActiveMatches(): Promise<MatchWithNames[] | null> {
       : null,
   }));
 
-  return withNames as MatchWithNames[] ?? [];
+  return (withNames as MatchWithNames[]) ?? [];
 }
 
 export async function getMatchById(id: string): Promise<MatchWithSets> {
@@ -220,7 +220,7 @@ export async function getCompletedMatchesPage(
       `,
       { count: "exact" }
     )
-    .eq("STATUS", "COMPLETED")
+    .eq("status", "COMPLETED")
     .order("created_at", { ascending: false })
     .range(from, to);
 
@@ -280,11 +280,12 @@ export const deleteMatch = async (matchId: string): Promise<any> => {
 };
 
 export const getActiveMatchesIdByPlayerId = async (playerId: string) => {
-  const { data, error } = await supabase
-    .from("matches")
-    .select("id")
-    .eq("status", "ACTIVE")
-    .or(`player1_id.eq.${playerId},player2_id.eq.${playerId}`) ?? [];
+  const { data, error } =
+    (await supabase
+      .from("matches")
+      .select("id")
+      .eq("status", "ACTIVE")
+      .or(`player1_id.eq.${playerId},player2_id.eq.${playerId}`)) ?? [];
 
   if (!error) {
     return data;
