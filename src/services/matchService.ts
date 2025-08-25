@@ -260,7 +260,7 @@ export async function getCompletedMatchesPage(
   return { data: completed ?? [], total: count ?? 0 };
 }
 
-export const deleteMatch = async (matchId: string): Promise<any> => {
+export const deleteMatch = async (matchId: string): Promise<void> => {
   try {
     const setResponse = await supabase
       .from("sets")
@@ -268,7 +268,7 @@ export const deleteMatch = async (matchId: string): Promise<any> => {
       .eq("match_id", matchId);
 
     if (setResponse.status === 204 || setResponse.status === 200) {
-      return await supabase.from("matches").delete().eq("id", matchId);
+      await supabase.from("matches").delete().eq("id", matchId);
     } else {
       console.error(setResponse.error);
 

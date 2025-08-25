@@ -9,7 +9,7 @@ import {
 } from "../services/matchService";
 import type { MatchWithSets } from "../types/match";
 import { getPlayerNamesByIds } from "../services/playerService";
-import { STATUS } from "../enum/status";
+import { STATUS, type Status } from "../enum/status";
 import { deleteSet } from "../services/setService";
 
 type SetScoreValue = "" | number;
@@ -25,7 +25,7 @@ const ActiveMatchPage = () => {
   const [setScores, setSetScores] = useState<SetScores>({});
   const [playerOne, setPlayerOne] = useState<string>("");
   const [playerTwo, setPlayerTwo] = useState<string>("");
-  const [saveStatus, setSaveStatus] = useState<STATUS>(STATUS.ACTIVE);
+  const [saveStatus, setSaveStatus] = useState<Status>(STATUS.ACTIVE);
 
   useEffect(() => {
     getActiveMatch();
@@ -87,7 +87,7 @@ const ActiveMatchPage = () => {
 
   // Ongoing or completed match
   const onStatusChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSaveStatus(e.currentTarget.value as STATUS);
+    setSaveStatus(e.currentTarget.value as Status);
   };
 
   const normalizeScore = (v: unknown): number | null =>
@@ -96,7 +96,7 @@ const ActiveMatchPage = () => {
   const buildNextMatch = (
     prev: MatchWithSets,
     setScores: SetScores,
-    status: STATUS
+    status: Status
   ): MatchWithSets => {
     let p1SetWinsCount = 0;
     let p2SetWinsCount = 0;
