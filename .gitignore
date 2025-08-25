@@ -30,3 +30,8 @@ dist-ssr
 # Build & cache
 .vite/
 
+# Supabase
+supabase/.temp/
+supabase/.branches/
+supabase/.logs/
+supabase/.env
