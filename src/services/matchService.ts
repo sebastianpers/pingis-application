@@ -240,13 +240,13 @@ export async function getCompletedMatchesPage(
   if (playerIds.length > 0) {
     const { data: players, error: pErr } = await supabase
       .from("players")
-      .select("id, name")
+      .select("id, username")
       .in("id", playerIds);
 
     if (pErr) throw pErr;
 
     playersById = new Map(
-      (players ?? []).map((p) => [p.id, { id: p.id, name: p.name }])
+      (players ?? []).map((p) => [p.id, { id: p.id, username: p.username }])
     );
   }
 

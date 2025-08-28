@@ -14,4 +14,4 @@ export type Player = {
   wins: number;
 };
 
-export type PlayerStub = { id: string; name: string };
+export type PlayerStub = { id: string; username: string };

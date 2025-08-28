@@ -103,13 +103,13 @@ const PlayedMatchesPage = () => {
                     }}
                   >
                     <td className="text-orange p-2 text-center text-nowrap">
-                      {match?.player1?.name}
+                      {match?.player1?.username}
                     </td>
                     <td className="text-orange p-2 text-center text-nowrap">
-                      {match?.player2?.name}
+                      {match?.player2?.username}
                     </td>
                     <td className="text-orange p-2 text-center text-nowrap">
-                      {match?.winner?.name}
+                      {match?.winner?.username}
                     </td>
                     <td className="text-orange p-2  text-center text-nowrap">
                       {match.best_of_sets}
