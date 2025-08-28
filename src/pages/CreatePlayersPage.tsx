@@ -109,46 +109,54 @@ const CreatePlayersPage: React.FC = () => {
   };
 
   return (
-    <Container>
+    <Container className="d-flex justify-content-center">
       <CardComponent>
         <h4 className="text-center">skapa spelare</h4>
 
-        <AddDynamicInputFields
-          value={players}
-          onChange={handlePlayersChange}
-          childErrors={handleChildErrors}
-        />
+        <Row className="justify-content-center">
+          <Col xs={12} sm={8} className="">
+            <AddDynamicInputFields
+              value={players}
+              onChange={handlePlayersChange}
+              childErrors={handleChildErrors}
+            />
 
-        <Row className="mt-2">
-          <Col className="text-warning my-2 text-center">
-            {errors.fetch && <div>{errors.fetch}</div>}
-            {errors.dbUnique && <div>{errors.dbUnique}</div>}
-            {errors.submit && <div>{errors.submit}</div>}
-            {collidesWithDb && !errors.dbUnique && (
-              <div>Användarnamn finns redan i databasen.</div>
-            )}
-            {hasEmptyUsernames && <div>Fyll i alla användarnamn.</div>}
-            {hasChildErrors && <div>Dubblett av användarnamn i listan.</div>}
-          </Col>
-        </Row>
+            <Row className="mt-2">
+              <Col className="text-warning my-2 text-center">
+                {errors.fetch && <div>{errors.fetch}</div>}
+                {errors.dbUnique && <div>{errors.dbUnique}</div>}
+                {errors.submit && <div>{errors.submit}</div>}
+                {collidesWithDb && !errors.dbUnique && (
+                  <div>Användarnamn finns redan i databasen.</div>
+                )}
+                {hasEmptyUsernames && <div>Fyll i alla användarnamn.</div>}
+                {hasChildErrors && (
+                  <div>Dubblett av användarnamn i listan.</div>
+                )}
+              </Col>
+            </Row>
 
-        <Row>
-          <Col>
-            <BtnBackComponent />
-          </Col>
+            <Row>
+              <Col>
+                <BtnBackComponent />
+              </Col>
 
-          <Col className="text-end">
-            <button
-              className="btn mt-3"
-              type="button"
-              onClick={createNewPlayers}
-              disabled={!canSubmit}
-              title={
-                !canSubmit ? "Lös valideringsfel innan du skapar." : undefined
-              }
-            >
-              {isSubmitting ? "Skapar..." : "Skapa"}
-            </button>
+              <Col className="text-end">
+                <button
+                  className="btn mt-3"
+                  type="button"
+                  onClick={createNewPlayers}
+                  disabled={!canSubmit}
+                  title={
+                    !canSubmit
+                      ? "Lös valideringsfel innan du skapar."
+                      : undefined
+                  }
+                >
+                  {isSubmitting ? "Skapar..." : "Skapa"}
+                </button>
+              </Col>
+            </Row>
           </Col>
         </Row>
       </CardComponent>
