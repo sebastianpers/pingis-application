@@ -6,7 +6,8 @@ import { usePlayerStatsById } from "../hooks/usePlayerStatsById";
 import NoDataComponent from "../components/NoDataComponent";
 import dateConverter from "../utils/dateConverter";
 import { useGoBackOrHome } from "../hooks/useGoBack";
-import StatisticMeaning from "../shared/statisticMeaning";
+import StatisticMeaning from "../shared/StatisticMeaning";
+
 const PlayerPage = () => {
   const params = useParams();
   const goBack = useGoBackOrHome();

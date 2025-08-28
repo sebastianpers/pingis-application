@@ -2,7 +2,7 @@ import { Container } from "react-bootstrap";
 import CardComponent from "../shared/CardComponent";
 import StatisticsTable from "../components/StatisticsTable";
 import BtnBackComponent from "../components/BtnBackComponent";
-import StatisticMeaning from "../shared/statisticMeaning";
+import StatisticMeaning from "../shared/StatisticMeaning";
 
 const StatisticPage = () => {
   return (
