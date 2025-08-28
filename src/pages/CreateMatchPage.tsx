@@ -89,7 +89,10 @@ const CreateMatchPage = () => {
 
         <Row className="mt-2">
           <Col className="text-center">
-            <small className="text-warning" onClick={navigateToCreatePlayer}>
+            <small
+              className="text-warning cursor-pointer"
+              onClick={navigateToCreatePlayer}
+            >
               Saknar spelare? Skapa en HÄR
             </small>
           </Col>
