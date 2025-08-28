@@ -3,6 +3,9 @@ export type Player = {
   id: string;
   losses: number;
   name: string;
+  firstName: string;
+  lastName: string;
+  username: string;
   sets_lost: number;
   sets_played: number;
   sets_won: number;

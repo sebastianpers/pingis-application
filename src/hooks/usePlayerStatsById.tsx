@@ -2,15 +2,22 @@ import { useEffect, useState } from "react";
 import { supabase } from "../services/supabaseClient";
 import type { PlayerStats } from "../types/playerStats";
 
-export const usePlayerStats = () => {
-  const [data, setData] = useState<PlayerStats[] | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+export const usePlayerStatsById = (id: string | undefined) => {
+  const [stats, setStats] = useState<PlayerStats[] | null>(null);
+  const [statsIsLoading, setLoading] = useState(true);
+  const [statsError, setError] = useState<string | null>(null);
 
   useEffect(() => {
     let cancelled = false;
 
-    const load = async() => {
+    const load = async () => {
+      if (!id) {
+        setLoading(false);
+        setError(null);
+
+        return;
+      }
+
       setLoading(true);
       setError(null);
 
@@ -19,18 +26,19 @@ export const usePlayerStats = () => {
         .select("*")
         .order("matches_win_pct", { ascending: false })
         .order("matches_won", { ascending: false })
-        .order("username", { ascending: true });
+        .order("username", { ascending: true })
+        .eq("player_id", id);
 
       if (cancelled) return;
 
       if (error) {
         setError(error.message);
-        setData(null);
+        setStats(null);
       } else {
-        setData(data as PlayerStats[]);
+        setStats(data as PlayerStats[]);
       }
       setLoading(false);
-    }
+    };
 
     load();
 
@@ -39,5 +47,5 @@ export const usePlayerStats = () => {
     };
   }, []);
 
-  return { data, loading, error };
-}
+  return { stats, statsIsLoading, statsError };
+};

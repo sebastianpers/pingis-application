@@ -27,7 +27,7 @@ export default function PageSizeSelect({
 
   return (
     <div
-      className={`d-flex justify-content-end align-items-center mb-2 ${className}`}
+      className={`d-flex justify-content-end align-items-center mb-2 mt-4 ${className}`}
     >
       {label ? (
         <Form.Label htmlFor={selectId} className="mb-0 me-3">

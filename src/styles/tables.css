@@ -1,0 +1,19 @@
+/* Table */
+.transparent-table,
+.transparent-table thead,
+.transparent-table tbody,
+.transparent-table tr,
+.transparent-table th,
+.transparent-table td {
+  background-color: transparent !important;
+}
+
+th,
+td {
+  color: var(--softhouse-orange) !important;
+}
+
+.text-c-n-wrap {
+  text-align: center;
+  text-wrap: nowrap;
+}

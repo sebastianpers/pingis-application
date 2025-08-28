@@ -3,85 +3,94 @@ import { useState } from "react";
 import CardComponent from "../shared/CardComponent";
 import BtnBackComponent from "../components/BtnBackComponent";
 import { removeAll, resetAllPlayers } from "../services/playerService";
+import DeleteConfirmModal from "../shared/modals.tsx/DeleteModal";
+import { showError, showSuccess } from "../utils/toast";
 
 const SettingsPage = () => {
-  const [settingsChanged, setSettingsChanged] = useState<boolean>(false);
+  const [showConfirm, setShowConfirm] = useState<boolean>(false);
+  const [removeData, setRemoveData] = useState<string>();
 
   const settingsInfo = {
-    removeAllMatchesAndPlayers: "Tar bort alla matcher och spelare permanent.",
+    removeAllMatchesAndPlayers:
+      "Är du säker på att du vill ta bort alla spelare och matcher?",
     resetAllPlayers:
-      "Nollställer alla spelares statistik och tar bort alla matcher permanent.",
+      "Är du säker på att du vill nollställa alla spelares statistik och ta bort alla matcher?",
   };
 
-  const [showInfo, setShowInfo] = useState<string>(
-    settingsInfo.removeAllMatchesAndPlayers
-  );
+  const requestDelete = () => {
+    setShowConfirm(true);
+  };
 
-  const handleSettingsClick = async (): Promise<void> => {
-    if (showInfo === settingsInfo.removeAllMatchesAndPlayers) {
-      const res = await removeAll();
-
-      if (res) {
-        setSettingsChanged(true);
+  const confirmDelete = async () => {
+    if (removeData === "removeAll") {
+      try {
+        await removeAll();
+        showSuccess("All data har tagits bort");
+      } catch (error) {
+        showError(`Något gick fel: \\n ${error}`);
+      } finally {
+        setShowConfirm(false);
       }
-    } else {
-      const res = await resetAllPlayers();
-      if (res) {
-        setSettingsChanged(true);
+    } else if (removeData === "resetAll") {
+      try {
+        await resetAllPlayers();
+        showSuccess("Alla spelare är nu nollställda");
+      } catch (error) {
+        showError(`Något gick fel: \\n ${error}`);
+      } finally {
+        setShowConfirm(false);
       }
     }
+  };
 
-    // Reset success message
-    setTimeout(() => {
-      setSettingsChanged(false);
-    }, 3000);
+  const cancelDelete = (): void => {
+    setShowConfirm(false);
   };
 
   return (
     <Container className="d-flex flex-column align-items-center">
-      <CardComponent classes="mt-5">
-        <h4 className="fw-bold text-center mb-4">Inställningar</h4>
+      <CardComponent classes="w-100 d-flex flex-column align-items-center">
+        <h4 className="fw-bold text-center mb-5">Inställningar</h4>
 
-        <Row className="gy-5 gy-sm-2">
-          <Col xs={{ order: 2 }} sm={{ span: 6, order: 1 }}>
-            <Row className="flex-column">
-              <Col className="text-center">
-                <button
-                  className="btn btn-orange"
-                  onClick={() =>
-                    setShowInfo(settingsInfo.removeAllMatchesAndPlayers)
-                  }
-                >
-                  Ta bort allt
-                </button>
-              </Col>
+        <DeleteConfirmModal
+          show={showConfirm}
+          onCancel={cancelDelete}
+          onConfirm={confirmDelete}
+          title={
+            removeData === "removeAll"
+              ? "Ta bort all data"
+              : "Nollställ spelare och matcher"
+          }
+          message={
+            removeData === "removeAll"
+              ? settingsInfo.removeAllMatchesAndPlayers
+              : settingsInfo.resetAllPlayers
+          }
+        />
 
-              <Col className="text-center mt-3">
-                <button
-                  className="btn btn-orange"
-                  onClick={() => setShowInfo(settingsInfo.resetAllPlayers)}
-                >
-                  Nollställ spelare
-                </button>
-              </Col>
-            </Row>
+        <Row className="gy-5 gy-sm-2 flex-column">
+          <Col className="text-center">
+            <button
+              className="btn btn-orange"
+              onClick={() => {
+                setRemoveData("removeAll");
+                requestDelete();
+              }}
+            >
+              Ta bort allt
+            </button>
           </Col>
 
-          <Col xs={{ order: 1 }} sm={{ span: 6, order: 1 }} className="mb-sm-2">
-            <div className="border border-2 p-3 border-secondary text-center">
-              <span className="text-orange">{showInfo}</span>
-
-              <div className="mt-3 text-center">
-                <button
-                  className={`btn ${
-                    settingsChanged ? "bg-success" : "bg-danger"
-                  }`}
-                  onClick={handleSettingsClick}
-                >
-                  {settingsChanged ? "Datan borttagen!" : "Ta bort"}
-                </button>
-              </div>
-            </div>
+          <Col className="text-center mt-4">
+            <button
+              className="btn btn-orange"
+              onClick={() => {
+                setRemoveData("resetAll");
+                requestDelete();
+              }}
+            >
+              Nollställ spelare
+            </button>
           </Col>
         </Row>
 

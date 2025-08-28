@@ -2,6 +2,7 @@ import type { PostgrestSingleResponse } from "@supabase/supabase-js";
 import type { Player, PlayerStub } from "../types/player";
 import { supabase } from "./supabaseClient";
 import { deleteActiveMatchesByPlayerId } from "./matchService";
+import type { PlayerInfo } from "../components/AddDynamicInputFields";
 
 export const getAllActivePlayers = async (): Promise<
   PostgrestSingleResponse<Player[]>
@@ -17,6 +18,7 @@ export const getAllPlayers = async (): Promise<
   return (await supabase.from("players").select("*")) ?? [];
 };
 
+
 export const getPlayerNamesByIds = async (
   ids: string[]
 ): Promise<PlayerStub[]> => {
@@ -30,7 +32,6 @@ export const getPlayerNamesByIds = async (
 
   if (error) throw error;
 
-  // Bevara samma ordning som i 'ids'
   const byId = new Map((data ?? []).map((p) => [p.id, p]));
 
   return (
@@ -57,27 +58,21 @@ export const getPlayerNamesByMatchId = async (
   return data ?? [];
 };
 
-export const createUpToTwoPlayers = async (newPlayers: string[]) => {
-  // 1) Städa & dedupe (case-insensitivt)
-  const cleaned = newPlayers
-    .map((n) => n?.trim())
-    .filter((n): n is string => Boolean(n));
+export const createPlayers = async (newPlayers: PlayerInfo[]) => {
+  const players = newPlayers.map((n) => {
+    n.firstName = n.firstName.trim();
+    n.lastName = n.lastName.trim();
+    n.username = n.username.replace(/\s+/g, "").trim();
 
-  const dedup = new Map<string, string>();
+    return n;
+  });
 
-  for (const n of cleaned) {
-    const key = n.toLocaleLowerCase("sv-SE");
-    if (!dedup.has(key)) dedup.set(key, n);
-  }
+  if (players.length === 0) return [];
 
-  const rows = Array.from(dedup.values())
-    .slice(0, 2)
-    .map((name) => ({ name }));
-
-  if (rows.length === 0) return [];
-
-  // 2) Skapa (eller ignorera om redan finns)
-  const { data, error } = await supabase.from("players").upsert(rows).select();
+  const { data, error } = await supabase
+    .from("players")
+    .upsert(players)
+    .select();
 
   if (error) throw error;
 

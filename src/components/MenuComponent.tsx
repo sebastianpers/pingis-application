@@ -6,10 +6,11 @@ import logoUrl from "@/assets/softhouse-logo.png";
 const MenuComponent = () => {
   const menu = [
     { name: "Skapa match", url: "/create-match" },
-    { name: "Pågående matcher", url: "/active-matches" },
     { name: "Statistik", url: "/statistics" },
-    { name: "Spelare", url: "/players" },
     { name: "Spelade matcher", url: "/completed-matches" },
+    { name: "Pågående matcher", url: "/active-matches" },
+    { name: "Skapa spelare", url: "/create-players" },
+    { name: "Spelare", url: "/players" },
     { name: "Inställningar", url: "/settings" },
   ];
 
@@ -17,7 +18,7 @@ const MenuComponent = () => {
     <Container fluid className="pt-3">
       <Row className="justify-content-center">
         <Col xs={12} md={4} className="p-0">
-          <CardComponent classes="w-100 d-flex flex-column align-items-center ">
+          <CardComponent classes="w-100 d-flex flex-column align-items-center">
             <div className="d-flex justify-content-center mt-2 mb-5 flex-column d-md-block d-none">
               <img
                 alt="Softhouse logo"

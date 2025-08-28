@@ -13,18 +13,35 @@ import PlayedMatchesPage from "./pages/PlayedMatchesPage";
 import SettingsPage from "./pages/SettingsPage";
 import ActiveMatchPage from "./pages/ActiveMatchPage";
 import PlayedMatchPage from "./pages/PlayedMatchPage";
+import CreatePlayersPage from "./pages/CreatePlayersPage";
+import PlayerPage from "./pages/PlayerPage";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-function App() {
+const App = () => {
   return (
     <BrowserRouter>
       <div className="app-layout">
         <NavbarComponent />
 
+        <ToastContainer
+          position="top-center"
+          autoClose={5000}
+          newestOnTop
+          closeOnClick
+          pauseOnHover
+          draggable={false}
+          limit={3}
+          theme="colored"
+        />
+
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/create-players" element={<CreatePlayersPage />} />
           <Route path="/create-match" element={<CreateMatchPage />} />
           <Route path="/statistics" element={<StatisticPage />} />
           <Route path="/players" element={<PlayersPage />} />
+          <Route path="/players/:id" element={<PlayerPage />} />
           <Route path="/active-match/:id" element={<ActiveMatchPage />} />
           <Route path="/active-matches" element={<ActiveMatchesPage />} />
           <Route path="/completed-matches" element={<PlayedMatchesPage />} />
@@ -34,6 +51,6 @@ function App() {
       </div>
     </BrowserRouter>
   );
-}
+};
 
 export default App;

@@ -6,11 +6,14 @@ import {
   softDeletePlayer,
 } from "../services/playerService";
 import type { Player } from "../types/player";
-import { Container, Spinner } from "react-bootstrap";
+import { Col, Container, Row, Spinner } from "react-bootstrap";
 import BtnBackComponent from "./BtnBackComponent";
+import { useNavigate } from "react-router-dom";
+import DeleteConfirmModal from "../shared/modals.tsx/DeleteModal";
+import { showError, showSuccess } from "../utils/toast";
 
 type PlayerNames = {
-  name: string;
+  username: string;
   created_at: string;
 };
 
@@ -22,9 +25,14 @@ type PlayerColumn = {
 
 const PlayersListComponent = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [players, setPlayers] = useState<Player[]>([]);
+  const [showConfirm, setShowConfirm] = useState(false); // styr modal
+  const [pendingPlayer, setPendingPlayer] = useState<Player | null>(null); // vilken spelare?
+  const [isDeleting, setIsDeleting] = useState(false); // disable knappar under delete
+  const navigate = useNavigate();
 
   const columnDefinition: PlayerColumn[] = [
-    { header: "Namn", accessor: "name" },
+    { header: "Användarnamn", accessor: "username" },
     {
       header: "Skapad",
       accessor: "created_at",
@@ -37,17 +45,16 @@ const PlayersListComponent = () => {
     },
   ];
 
-  const [players, setPlayers] = useState<Player[]>([]);
-
   useEffect(() => {
     setIsLoading(true);
     getAllPlayers();
   }, []);
 
-  const getAllPlayers = async () => {
+  const getAllPlayers = async (): Promise<void> => {
     const { data, error } = await getAllActivePlayers();
 
     if (error) {
+      setIsLoading(false);
       return;
     }
 
@@ -55,14 +62,60 @@ const PlayersListComponent = () => {
     setIsLoading(false);
   };
 
-  const deletePlayer = async (playerId: string) => {
-    await softDeletePlayer(playerId);
+  const requestDelete = (playerId: string): void => {
+    const player = players.find((p) => p.id === playerId) ?? null;
 
-    setPlayers((prev) => prev?.filter((p) => p.id !== playerId) ?? prev);
+    setPendingPlayer(player);
+    setShowConfirm(true);
+  };
+
+  const confirmDelete = async (): Promise<void> => {
+    if (!pendingPlayer) return;
+
+    try {
+      setIsDeleting(true);
+
+      await softDeletePlayer(pendingPlayer.id);
+      showSuccess("Spelaren är raderad");
+      setPlayers((prev) => prev.filter((p) => p.id !== pendingPlayer.id));
+    } catch (err) {
+      console.error("ERROR: ", err);
+      showError(`Något gick fel: \\n ${err}`);
+    } finally {
+      setIsDeleting(false);
+      setShowConfirm(false);
+      setPendingPlayer(null);
+    }
+  };
+
+  const cancelDelete = (): void => {
+    setShowConfirm(false);
+    setPendingPlayer(null);
+  };
+
+  const navigateToPlayer = (id: string): void => {
+    navigate(`/players/${id}`);
   };
 
   return (
     <Container className="mt-3 d-flex align-items-center flex-column">
+      <DeleteConfirmModal
+        show={showConfirm}
+        onCancel={cancelDelete}
+        onConfirm={confirmDelete}
+        isBusy={isDeleting}
+        message={
+          pendingPlayer ? (
+            <>
+              Är du säker på att du vill ta bort{" "}
+              <strong>{pendingPlayer.username}</strong>?
+            </>
+          ) : (
+            "Är du säker på att du vill ta bort den här spelaren?"
+          )
+        }
+      />
+
       <CardComponent>
         <h4 className="fw-bold text-center mb-3">Spelare</h4>
 
@@ -80,12 +133,17 @@ const PlayersListComponent = () => {
           <TableComponent
             columns={columnDefinition}
             data={players}
-            handleFunc={deletePlayer}
+            handleFunc={requestDelete}
+            handleNavigation={navigateToPlayer}
             idKey="id"
           />
         )}
 
-        <BtnBackComponent classes="mt-4" />
+        <Row>
+          <Col>
+            <BtnBackComponent classes="text-center" />
+          </Col>
+        </Row>
       </CardComponent>
     </Container>
   );

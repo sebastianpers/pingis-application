@@ -1,13 +1,16 @@
-import { Spinner } from "react-bootstrap";
+import { Spinner, Table } from "react-bootstrap";
 import { usePlayerStats } from "../hooks/usePlayerStats";
 import NoDataComponent from "./NoDataComponent";
 
-export default StatisticsTable;
-
-export function StatisticsTable() {
+const StatisticsTable = () => {
   const { data, loading, error } = usePlayerStats();
 
-  if (error) return <div>Kunde inte hämta statistik: {error}</div>;
+  if (error)
+    return (
+      <div className="text-warning text-center">
+        Kunde inte hämta statistik: {error}
+      </div>
+    );
 
   return (
     <div className="overflow-x-auto">
@@ -24,20 +27,20 @@ export function StatisticsTable() {
       )}
 
       {!loading && data && data?.length > 0 && (
-        <table className="min-w-full w-100 border-separate border-spacing-y-1 transparent-table">
+        <Table size="sm" striped responsive hover className="transparent-table">
           <thead>
             <tr className="text-left">
-              <th className="p-2 text-orange text-nowrap">Spelare</th>
-              <th className="p-2 text-orange">MV%</th>
-              <th className="p-2 text-orange">M</th>
-              <th className="p-2 text-orange">V</th>
-              <th className="p-2 text-orange">F</th>
-              <th className="p-2 text-orange">P</th>
-              <th className="p-2 text-orange text-nowrap">P mot</th>
-              <th className="p-2 text-orange text-nowrap">+/- P</th>
-              <th className="p-2 text-orange text-nowrap">Set V</th>
-              <th className="p-2 text-orange text-nowrap">Set F</th>
-              <th className="p-2 text-orange text-nowrap">+/- Set</th>
+              <th className="p-2 text-nowrap">Spelare</th>
+              <th className="p-2 text-center">MV%</th>
+              <th className="p-2 text-center">M</th>
+              <th className="p-2 text-center">V</th>
+              <th className="p-2 text-center">F</th>
+              <th className="p-2 text-center">P</th>
+              <th className="p-2 text-c-n-wrap">P mot</th>
+              <th className="p-2 text-c-n-wrap">+/- P</th>
+              <th className="p-2 text-c-n-wrap">Set V</th>
+              <th className="p-2 text-c-n-wrap">Set F</th>
+              <th className="p-2 text-c-n-wrap">+/- Set</th>
             </tr>
           </thead>
 
@@ -47,24 +50,26 @@ export function StatisticsTable() {
                 key={row.player_id}
                 className="bg-white hover:bg-gray-50 border-bottom"
               >
-                <td className="p-2 font-medium text-orange">
-                  {row.name ?? "Okänd"}
+                <td className="p-2 font-mediumtext-orange">
+                  {row.username ?? "Okänd"}
                 </td>
-                <td className="p-2 text-orange">{row.matches_win_pct}%</td>
-                <td className="p-2 text-orange">{row.matches_played}</td>
-                <td className="p-2 text-orange">{row.matches_won}</td>
-                <td className="p-2 text-orange">{row.matches_lost}</td>
-                <td className="p-2 text-orange">{row.points_for}</td>
-                <td className="p-2 text-orange">{row.points_against}</td>
-                <td className="p-2 text-orange">{row.points_diff}</td>
-                <td className="p-2 text-orange">{row.sets_won}</td>
-                <td className="p-2 text-orange">{row.sets_lost}</td>
-                <td className="p-2 text-orange">{row.sets_diff}</td>
+                <td className="p-2 text-center">{row.matches_win_pct}%</td>
+                <td className="p-2 text-center">{row.matches_played}</td>
+                <td className="p-2 text-center">{row.matches_won}</td>
+                <td className="p-2 text-center">{row.matches_lost}</td>
+                <td className="p-2 text-center">{row.points_for}</td>
+                <td className="p-2 text-center">{row.points_against}</td>
+                <td className="p-2 text-center">{row.points_diff}</td>
+                <td className="p-2 text-center">{row.sets_won}</td>
+                <td className="p-2 text-center">{row.sets_lost}</td>
+                <td className="p-2 text-center">{row.sets_diff}</td>
               </tr>
             ))}
           </tbody>
-        </table>
+        </Table>
       )}
     </div>
   );
-}
+};
+
+export default StatisticsTable;

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import type { CompletedMatch } from "../types/match";
 import { getCompletedMatchesPage } from "../services/matchService";
 import { useNavigate } from "react-router-dom";
-import dateConverter from "../helpers/dateConverter";
+import dateConverter from "../utils/dateConverter";
 import PageSizeSelect from "../shared/pagination/pageSizeSelect";
 import PaginationBar from "../shared/pagination/paginationBar";
 import BtnBackComponent from "../components/BtnBackComponent";
@@ -76,7 +76,7 @@ const PlayedMatchesPage = () => {
               striped
               responsive
               hover
-              className="transparent-table"
+              className="transparent-table mt-3"
             >
               <thead>
                 <tr>
@@ -96,6 +96,7 @@ const PlayedMatchesPage = () => {
               <tbody>
                 {completedMatches?.map((match) => (
                   <tr
+                    className="cursor-pointer"
                     key={match.id}
                     onClick={() => {
                       navigateToCompletedMatch(match.id);
@@ -135,7 +136,7 @@ const PlayedMatchesPage = () => {
           </>
         )}
 
-        <BtnBackComponent />
+        <BtnBackComponent classes="text-center" />
       </CardComponent>
     </Container>
   );

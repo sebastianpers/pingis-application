@@ -10,7 +10,7 @@ import NoDataComponent from "../components/NoDataComponent";
 type PlayerStub = { id: string; name: string | null };
 
 type MatchWithNames = Match & {
-  player1: PlayerStub | null; // kan vara null om FK saknas/pekar fel
+  player1: PlayerStub | null;
   player2: PlayerStub | null;
 };
 
@@ -128,7 +128,7 @@ const ActiveMatchesPage = () => {
 
         <Row className="mt-3">
           <Col>
-            <BtnBackComponent />
+            <BtnBackComponent classes="text-center" />
           </Col>
         </Row>
       </CardComponent>

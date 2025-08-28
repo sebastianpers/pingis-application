@@ -1,6 +1,7 @@
 @import "./styles/global-variables.css";
 @import "./styles/text.css";
 @import "./styles/buttons.css";
+@import "./styles/tables.css";
 
 *,
 *::before,
@@ -103,15 +104,8 @@ body {
   height: 100%;
 }
 
-
-/* Table */
-.transparent-table,
-.transparent-table thead,
-.transparent-table tbody,
-.transparent-table tr,
-.transparent-table th,
-.transparent-table td {
-  background-color: transparent !important;
+.cursor-pointer:hover {
+  cursor: pointer !important;
 }
 
 ul.pagination > li.page-item.active > .page-link {

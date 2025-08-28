@@ -13,6 +13,7 @@ type TableComponentProps<T, ID extends Extract<keyof T, string>> = {
   data: T[];
   columns: Column<T>[];
   handleFunc?: (id: T[ID]) => void;
+  handleNavigation?: (id: T[ID]) => void;
   idKey: ID;
 };
 
@@ -20,6 +21,7 @@ const TableComponent = <T, ID extends Extract<keyof T, string>>({
   columns,
   data,
   handleFunc,
+  handleNavigation,
   idKey,
 }: TableComponentProps<T, ID>): JSX.Element => {
   if (!columns || !data || data.length === 0) {
@@ -31,7 +33,7 @@ const TableComponent = <T, ID extends Extract<keyof T, string>>({
   }
 
   return (
-    <Table className="transparent-table">
+    <Table striped responsive hover className="transparent-table">
       <thead>
         <tr>
           {columns.map((col) => (
@@ -49,11 +51,17 @@ const TableComponent = <T, ID extends Extract<keyof T, string>>({
           const rowId = row[idKey];
 
           return (
-            <tr key={String(rowId)}>
+            <tr
+              className="cursor-pointer"
+              key={String(rowId)}
+              onClick={() => {
+                handleNavigation?.(row[idKey]);
+              }}
+            >
               {columns.map((col) => {
                 return (
                   <td
-                    className="text-orange"
+                    className="text-orange align-content-center"
                     key={"td_" + String(col.accessor)}
                   >
                     {col.format
@@ -65,12 +73,16 @@ const TableComponent = <T, ID extends Extract<keyof T, string>>({
 
               {handleFunc && idKey && (
                 <td>
-                  <span
-                    onClick={() => handleFunc?.(rowId)}
-                    className="text-danger fw-bold"
+                  <button
+                    title="Ta bort spelare permanent"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleFunc?.(rowId);
+                    }}
+                    className="btn bg-danger fw-bold"
                   >
                     X
-                  </span>
+                  </button>
                 </td>
               )}
             </tr>

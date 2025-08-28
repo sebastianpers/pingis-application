@@ -1,6 +1,7 @@
 export type PlayerStats = {
   player_id: string;
   name: string | null;
+  username: string;
   matches_played: number;
   matches_won: number;
   matches_lost: number;
