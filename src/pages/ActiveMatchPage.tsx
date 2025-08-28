@@ -55,8 +55,8 @@ const ActiveMatchPage = () => {
         match.player2_id,
       ]);
 
-      setPlayerOne(playerNamesAndIds[0]?.name);
-      setPlayerTwo(playerNamesAndIds[1]?.name);
+      setPlayerOne(playerNamesAndIds[0]?.username);
+      setPlayerTwo(playerNamesAndIds[1]?.username);
       setMatch(match);
     }
   };

@@ -65,8 +65,8 @@ const CreateMatchPage = () => {
   };
 
   return (
-    <Container className="d-flex justify-content-center">
-      <CardComponent classes="card-component-sm">
+    <Container className="d-flex justify-content-center mt-5 pt-5">
+      <CardComponent classes="card-component-sm ">
         <h4 className="fw-bold text-center mb-3">Skapa match</h4>
 
         <Row>

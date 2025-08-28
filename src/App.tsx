@@ -17,12 +17,15 @@ import CreatePlayersPage from "./pages/CreatePlayersPage";
 import PlayerPage from "./pages/PlayerPage";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import InstallBanner from "./components/InstallBanner";
 
 const App = () => {
   return (
     <BrowserRouter>
       <div className="app-layout">
         <NavbarComponent />
+
+        <InstallBanner />
 
         <ToastContainer
           position="top-center"

@@ -1,7 +1,7 @@
 import { Col, Container, ListGroup, Nav, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import CardComponent from "../shared/CardComponent";
-import logoUrl from "@/assets/softhouse-logo.png";
+import logoUrl from "../assets/softhouse-logo.png";
 
 const MenuComponent = () => {
   const menu = [
@@ -15,7 +15,7 @@ const MenuComponent = () => {
   ];
 
   return (
-    <Container fluid className="pt-3">
+    <Container fluid className="mt-4 pt-4 mt-sm-0 pt-sm-0">
       <Row className="justify-content-center">
         <Col xs={12} md={4} className="p-0">
           <CardComponent classes="w-100 d-flex flex-column align-items-center">

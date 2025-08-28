@@ -9,3 +9,7 @@ export const STATISTIC_MEANING = [
   "Set F = Set förlorade",
   "+/- = Plus minus i set",
 ];
+
+// For PWA
+export const DISMISS_TS_KEY = 'a2hs-dismissed-at'
+export const DISMISS_COUNT_KEY = 'a2hs-dismiss-count'

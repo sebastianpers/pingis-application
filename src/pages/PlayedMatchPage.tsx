@@ -20,11 +20,11 @@ const PlayedMatch = () => {
     const response = await getCompletedMatchById(id);
 
     if (response?.player1?.["id"].toString() === response?.winner_id) {
-      setWinner(response?.player1?.name);
+      setWinner(response?.player1?.username);
     }
 
     if (response?.player2?.["id"].toString() === response?.winner_id) {
-      setWinner(response?.player2?.name);
+      setWinner(response?.player2?.username);
     }
 
     if (response) {
@@ -38,7 +38,7 @@ const PlayedMatch = () => {
         <div className="border border-2 rounded p-2 border-white">
           <Row className="my-3">
             <Col className="text-white text-center">
-              <span className="text-orange fw-bold">Vinnare:</span>{" "}
+              <span className="text-orange fw-bold">Vinnare123:</span>{" "}
               <span className="text-info">{winner}</span>
             </Col>
           </Row>
@@ -78,7 +78,7 @@ const PlayedMatch = () => {
 
             <Row>
               <Col>
-                <span>{completedMatch?.player1?.name}</span>
+                <span>{completedMatch?.player1?.username}</span>
                 <Form.Control
                   type="number"
                   inputMode="numeric"
@@ -89,7 +89,7 @@ const PlayedMatch = () => {
               </Col>
 
               <Col>
-                <span>{completedMatch?.player2?.name}</span>
+                <span>{completedMatch?.player2?.username}</span>
                 <Form.Control
                   type="number"
                   inputMode="numeric"
@@ -104,7 +104,7 @@ const PlayedMatch = () => {
 
         <Row>
           <Col>
-            <BtnBackComponent/>
+            <BtnBackComponent />
           </Col>
         </Row>
       </CardComponent>

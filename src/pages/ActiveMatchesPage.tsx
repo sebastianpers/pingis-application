@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import BtnBackComponent from "../components/BtnBackComponent";
 import NoDataComponent from "../components/NoDataComponent";
 
-type PlayerStub = { id: string; name: string | null };
+type PlayerStub = { id: string; username: string | null };
 
 type MatchWithNames = Match & {
   player1: PlayerStub | null;
@@ -56,7 +56,7 @@ const ActiveMatchesPage = () => {
   };
 
   return (
-    <Container className="d-flex justify-content-center">
+    <Container className="d-flex justify-content-center mt-5 pt-5 mt-sm-0 pt-sm-0">
       <CardComponent>
         <h4 className="fw-bold text-center mb-3">Pågående matcher</h4>
 
@@ -101,10 +101,10 @@ const ActiveMatchesPage = () => {
                   }}
                 >
                   <td className="text-orange p-2 text-center">
-                    {match?.player1?.name}
+                    {match?.player1?.username}
                   </td>
                   <td className="text-orange p-2 text-center">
-                    {match?.player2?.name}
+                    {match?.player2?.username}
                   </td>
                   <td className="text-orange p-2 text-center">
                     {match.best_of_sets}

@@ -18,7 +18,6 @@ export const getAllPlayers = async (): Promise<
   return (await supabase.from("players").select("*")) ?? [];
 };
 
-
 export const getPlayerNamesByIds = async (
   ids: string[]
 ): Promise<PlayerStub[]> => {
@@ -27,7 +26,7 @@ export const getPlayerNamesByIds = async (
 
   const { data, error } = await supabase
     .from("players")
-    .select("id, name")
+    .select("id, username")
     .in("id", unique);
 
   if (error) throw error;

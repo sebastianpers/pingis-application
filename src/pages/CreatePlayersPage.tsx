@@ -109,7 +109,7 @@ const CreatePlayersPage: React.FC = () => {
   };
 
   return (
-    <Container className="d-flex justify-content-center">
+    <Container className="d-flex justify-content-center mt-4 pt-4 mt-sm-0 pt-sm-0">
       <CardComponent>
         <h4 className="text-center">skapa spelare</h4>
 

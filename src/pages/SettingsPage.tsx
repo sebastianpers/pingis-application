@@ -48,7 +48,7 @@ const SettingsPage = () => {
   };
 
   return (
-    <Container className="d-flex flex-column align-items-center">
+    <Container className="d-flex flex-column align-items-center mt-5 pt-5 mt-sm-0 pt-sm-0">
       <CardComponent classes="w-100 d-flex flex-column align-items-center">
         <h4 className="fw-bold text-center mb-5">Inställningar</h4>
 
