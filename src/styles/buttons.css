@@ -16,3 +16,12 @@
   background: var(--softhouse-blue) !important;
   color: white !important;
 }
+
+.btn-cancel-outline {
+  background: transparent !important;
+  color: black !important;
+}
+
+.btn-cancel-outline:hover {
+  filter: brightness(20%);
+}

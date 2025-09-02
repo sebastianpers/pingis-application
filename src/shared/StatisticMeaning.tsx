@@ -18,7 +18,7 @@ const StatisticMeaning = () => {
       </div>
 
       {toggleInfo && (
-        <ul className="text-white text-wrap">
+        <ul className="text-white text-break">
           {STATISTIC_MEANING.map((i) => (
             <li>{i}</li>
           ))}

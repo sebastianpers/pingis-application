@@ -1,14 +1,15 @@
 import { Col, Container, Row } from "react-bootstrap";
 import { useState } from "react";
 import CardComponent from "../shared/CardComponent";
-import BtnBackComponent from "../components/BtnBackComponent";
 import { removeAll, resetAllPlayers } from "../services/playerService";
 import DeleteConfirmModal from "../shared/modals.tsx/DeleteModal";
 import { showError, showSuccess } from "../utils/toast";
-
+import { useNavigate } from "react-router-dom";
 const SettingsPage = () => {
   const [showConfirm, setShowConfirm] = useState<boolean>(false);
   const [removeData, setRemoveData] = useState<string>();
+
+  const navigate = useNavigate();
 
   const settingsInfo = {
     removeAllMatchesAndPlayers:
@@ -96,7 +97,14 @@ const SettingsPage = () => {
 
         <Row className="mt-4">
           <Col>
-            <BtnBackComponent />
+            <button
+              onClick={() => {
+                navigate("/");
+              }}
+              className="btn btn-cancel"
+            >
+              Tillbaka
+            </button>
           </Col>
         </Row>
       </CardComponent>

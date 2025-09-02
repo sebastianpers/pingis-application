@@ -105,6 +105,7 @@ const AddDynamicInputFields: React.FC<Props> = ({
                   <Form.Control
                     name="username"
                     type="text"
+                    autoComplete="off"
                     placeholder="Användarnamn"
                     value={item.username}
                     onChange={(event) => handleChange(event, index)}
@@ -119,6 +120,7 @@ const AddDynamicInputFields: React.FC<Props> = ({
                     className="mt-3"
                     name="firstName"
                     type="text"
+                    autoComplete="off"
                     placeholder="Förnamn"
                     value={item.firstName}
                     onChange={(event) => handleChange(event, index)}
@@ -128,6 +130,7 @@ const AddDynamicInputFields: React.FC<Props> = ({
                     className="mt-3"
                     name="lastName"
                     type="text"
+                    autoComplete="off"
                     placeholder="Efternamn"
                     value={item.lastName}
                     onChange={(event) => handleChange(event, index)}
@@ -159,7 +162,7 @@ const AddDynamicInputFields: React.FC<Props> = ({
                   className="btn btn-sm mt-4 fw-bold w-100"
                   onClick={handleAddInput}
                 >
-                  Lägg till spelare
+                  Lägg till ytterligare spelare
                 </button>
               )}
             </Col>

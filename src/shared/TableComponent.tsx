@@ -1,10 +1,9 @@
-import type { JSX } from "react";
+import { useEffect, useState, type JSX } from "react";
 import { Table } from "react-bootstrap";
+import { useAuth } from "../auth/AuthContext";
 
 type Column<T> = {
   header: string;
-  // "accessor" måste vara en av nycklarna i dataobjektet av typ T.
-  // `keyof T` är delen som säkerställer detta.
   accessor: keyof T;
   format?: (value: unknown) => string;
 };
@@ -24,6 +23,37 @@ const TableComponent = <T, ID extends Extract<keyof T, string>>({
   handleNavigation,
   idKey,
 }: TableComponentProps<T, ID>): JSX.Element => {
+  const { requestAuth } = useAuth();
+  const [showDeleteBtn, setShowDeleteBtn] = useState(false);
+
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      const target = e.target as HTMLElement | null;
+      if (
+        target &&
+        (target.tagName === "INPUT" ||
+          target.tagName === "TEXTAREA" ||
+          target.isContentEditable)
+      )
+        return;
+
+      // visa knapp
+      if (
+        !e.repeat &&
+        e.shiftKey &&
+        e.ctrlKey &&
+        e.altKey &&
+        e.code === "KeyD"
+      ) {
+        e.preventDefault();
+        setShowDeleteBtn((value) => !value);
+      }
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, []);
+
   if (!columns || !data || data.length === 0) {
     return (
       <p className="mt-3 text-warning text-center">
@@ -71,13 +101,14 @@ const TableComponent = <T, ID extends Extract<keyof T, string>>({
                 );
               })}
 
-              {handleFunc && idKey && (
+              {showDeleteBtn && handleFunc && idKey && (
                 <td>
                   <button
                     title="Ta bort spelare permanent"
-                    onClick={(e) => {
+                    onClick={async (e) => {
                       e.stopPropagation();
-                      handleFunc?.(rowId);
+                      const ok = await requestAuth();
+                      if (ok) handleFunc?.(rowId);
                     }}
                     className="btn bg-danger fw-bold"
                   >

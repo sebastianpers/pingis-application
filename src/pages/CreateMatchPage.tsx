@@ -17,11 +17,12 @@ const CreateMatchPage = () => {
   const [selectedPlayers, setSelectedPlayers] = useState<string[]>([]);
   const [sets, setSets] = useState<number>(3);
   const [selectValue, setSelectValue] = useState<string>("");
+
   useEffect(() => {
     (async () => {
       const { data, error } = await getAllActivePlayers();
       if (error) {
-        console.error("Supabase SELECT-fel:", error);
+        console.error(error);
         return;
       }
       setPlayers(data ?? []);

@@ -1,9 +1,14 @@
 import { Col, Container, ListGroup, Nav, Row } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CardComponent from "../shared/CardComponent";
 import logoUrl from "../assets/softhouse-logo.png";
+import { useAuth } from "../auth/AuthContext";
 
 const MenuComponent = () => {
+  const { requestAuth } = useAuth();
+
+  const navigate = useNavigate();
+
   const menu = [
     { name: "Skapa match", url: "/create-match" },
     { name: "Statistik", url: "/statistics" },
@@ -11,7 +16,7 @@ const MenuComponent = () => {
     { name: "Pågående matcher", url: "/active-matches" },
     { name: "Skapa spelare", url: "/create-players" },
     { name: "Spelare", url: "/players" },
-    { name: "Inställningar", url: "/settings" },
+    { name: "Inställningar", url: "/settings", requiresAuth: true },
   ];
 
   return (
@@ -39,9 +44,22 @@ const MenuComponent = () => {
                   as="li"
                   className="text-light menu-li"
                 >
-                  <Nav.Link as={Link} to={m.url}>
-                    {m.name}
-                  </Nav.Link>
+                  {m.requiresAuth ? (
+                    <Nav.Link
+                      as={Link}
+                      to="/settings"
+                      onClick={async () => {
+                        const ok = await requestAuth();
+                        if (ok) navigate("/settings");
+                      }}
+                    >
+                      Inställningar
+                    </Nav.Link>
+                  ) : (
+                    <Nav.Link as={Link} to={m.url}>
+                      {m.name}
+                    </Nav.Link>
+                  )}
                 </ListGroup.Item>
               ))}
             </ListGroup>

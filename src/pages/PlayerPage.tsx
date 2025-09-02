@@ -43,10 +43,10 @@ const PlayerPage = () => {
 
         {!isLoading && (
           <>
-            <h4 className="text-center">{player?.username}</h4>
+            <h4 className="text-center text-break">{player?.username}</h4>
 
             <p>
-              <strong>Namn:</strong> {player?.name}
+              <strong className="text-break">Namn:</strong> {player?.name}
             </p>
             <p>
               <strong>Skapad:</strong> {dateConverter(player?.created_at)}

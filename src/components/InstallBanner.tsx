@@ -19,7 +19,6 @@ export default function InstallBanner() {
   const { canInstall, installed, showIOSHelp, promptInstall } =
     useInstallPrompt();
 
-  // Läs historik om avslag
   const [dismissCount, setDismissCount] = useState<number>(() =>
     readNum(DISMISS_COUNT_KEY, 0)
   );
@@ -27,7 +26,6 @@ export default function InstallBanner() {
     readNum(DISMISS_TS_KEY, 0)
   );
 
-  // När appen installeras: städa blockering
   useEffect(() => {
     if (installed) {
       localStorage.removeItem(DISMISS_TS_KEY);
@@ -35,7 +33,6 @@ export default function InstallBanner() {
     }
   }, [installed]);
 
-  // Räkna ut om cooldown passerat
   const canShowAfterCooldown = useMemo(() => {
     const days = cooldownDaysFor(dismissCount);
     const cooldownMs = days * 24 * 60 * 60 * 1000;
@@ -43,7 +40,6 @@ export default function InstallBanner() {
     return Date.now() - dismissedAt > cooldownMs;
   }, [dismissCount, dismissedAt]);
 
-  // Visa Android/desktop-banner om canInstall, annars ev. iOS-hjälp
   const showInstall = !installed && canShowAfterCooldown && canInstall;
   const showIOS =
     !installed && canShowAfterCooldown && !canInstall && showIOSHelp;
